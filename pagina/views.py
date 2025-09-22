@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from MiProyectoDjango.pagina.models import Producto
+from .models import Producto
 
 # from django.http import HttpResponse
 
@@ -11,4 +11,4 @@ def login(request):
     return render(request, 'login.html')
 def posts(request):
     productos = Producto.objects.all()
-    return render(request, 'posts.html', {'producto': productos})
+    return render(request, 'posts.html', {'productos': productos})
