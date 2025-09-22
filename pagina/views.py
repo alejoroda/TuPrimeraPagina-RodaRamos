@@ -5,3 +5,5 @@ from django.shortcuts import render
 def home(request):
     # return HttpResponse("Hola, Alejo! Esta es la primera APP")
     return render(request, 'home.html')
+def login(request):
+    return render(request, 'login.html')
