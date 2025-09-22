@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
@@ -10,6 +12,7 @@ class Cliente(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
+    fechapublicacion = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.nombre} (${self.precio})"

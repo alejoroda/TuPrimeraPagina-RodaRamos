@@ -4,4 +4,5 @@ app_name = "pagina"
 urlpatterns = [
     path('', views.home, name="home"),
     path('login/', views.login, name="login"),
+    path('posts/', views.posts, name="Lista de Productos")
 ]
