@@ -34,7 +34,7 @@ acceder a: http://localhost:8000/
 ```
 
 ## Estructura
-
+```
 MiProyectoDjango/
 │── MiProyectoDjango/
 │   │── __init__.py
@@ -72,4 +72,4 @@ MiProyectoDjango/
 │── db.sqlite3
 │── manage.py
 │── .gitignore
-│── pyvenv.cfg
+│── pyvenv.cfg```
