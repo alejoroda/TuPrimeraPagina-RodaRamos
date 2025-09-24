@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Lista de Productos{% endblock %}
+{% block title %} Lista de Productos {% endblock %}
 
 {% block content %}
+<div class="text-center mt-4">
+    <a href="{% url 'pagina:post_create' %}" class="btn btn-primary mt-4">Crear Nuevo Producto</a>
+</div>
 <div class="container mt-4">
     <h1 class="mb-4">Lista de Productos</h1>
     <table class="table table-striped">
