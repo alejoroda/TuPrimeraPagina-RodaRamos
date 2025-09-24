@@ -10,11 +10,18 @@ class Cliente(models.Model):
     def __str__(self):
         return self.nombre
 
+class Categoria(models.Model):
+    categoria = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.categoria
+
 class Producto(models.Model):
     class Estado(models.TextChoices):
         BORRADOR = "B" , "Borrador"
         PUBLICADO = "P" , "Publicado"
     nombre = models.CharField(max_length=100)
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     fechapublicacion = models.DateField(auto_now_add=True)
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -31,3 +38,5 @@ class Compra(models.Model):
 
     def __str__(self):
         return f"{self.cantidad}x {self.producto.nombre}"
+    
+    

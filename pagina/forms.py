@@ -4,5 +4,5 @@ from .models import Producto
 class PostForm(forms.ModelForm):    
     class Meta:
         model = Producto
-        fields = ['nombre', 'precio', 'estado']
+        fields = ['nombre', 'categoria', 'precio', 'estado']
         
