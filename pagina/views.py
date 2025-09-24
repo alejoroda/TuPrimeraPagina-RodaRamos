@@ -1,14 +1,20 @@
 from django.shortcuts import redirect, render
 from .forms import PostForm
 from .models import Producto
-
-# from django.http import HttpResponse
+from django.contrib.auth import login, authenticate
+from .forms import RegisterForm
 
 def home(request):
-    # return HttpResponse("Hola, Alejo! Esta es la primera APP")
     return render(request, 'home.html')
-def login(request):
-    return render(request, 'login.html')
+def register(response):
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
+        if form.is_valid():
+            form.save()
+        return redirect ("pagina:posts")
+    else:
+            form = RegisterForm()
+    return render(response, 'register.html', {"form": form})
 def posts(request):
     productos = Producto.objects.all()
     return render(request, 'posts.html', {'productos': productos})
