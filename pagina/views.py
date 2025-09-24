@@ -12,3 +12,5 @@ def login(request):
 def posts(request):
     productos = Producto.objects.all()
     return render(request, 'posts.html', {'productos': productos})
+def post_create(request):
+    return render(request, 'post_create.html')

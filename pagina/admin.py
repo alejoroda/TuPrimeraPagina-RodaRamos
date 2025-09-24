@@ -1,3 +1,21 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Cliente, Producto, Compra
+@admin.register(Cliente)
+class ClienteAdmin(admin.ModelAdmin):   
+    list_display = ("nombre", "correo")
+    search_fields = ("nombre", "correo")
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "precio", "fechapublicacion", "autor", "estado")
+    list_filter = ("estado", "fechapublicacion", "autor")
+    search_fields = ("nombre", "autor__username")
+    date_hierarchy = "fechapublicacion"
+    ordering = ("-fechapublicacion",)
+@admin.register(Compra)
+class CompraAdmin(admin.ModelAdmin):
+    list_display = ("cliente", "producto", "cantidad", "fecha")
+    list_filter = ("fecha", "producto")
+    search_fields = ("cliente__nombre", "producto__nombre")
+    date_hierarchy = "fecha"
+    ordering = ("-fecha",)

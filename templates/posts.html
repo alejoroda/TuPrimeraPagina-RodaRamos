@@ -1,34 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Productos</title>
-</head>
-<body>  
-    <h1>Lista de Productos</h1>
-    <ul>
-    {% for producto in productos %}
-        <li>
-            <strong>{{ producto.nombre }}</strong><br>
-            {{ producto.precio }}$<br>
-            {{ producto.fechapublicacion }}
-        </li>
-    {% endfor %}
-    </ul>
 {% extends 'base.html' %}
 
 {% block title %}Lista de Productos{% endblock %}
 
 {% block content %}
-    <h1>Lista de Productos</h1>
-    <ul>
-    {% for producto in productos %}
-        <li>
-            <strong>{{ producto.nombre }}</strong><br>
-            {{ producto.precio }}$<br>
-            {{ producto.fechapublicacion }}
-        </li>
-    {% endfor %}
-    </ul>
+<div class="container mt-4">
+    <h1 class="mb-4">Lista de Productos</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Fecha de Publicación</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for producto in productos %}
+            <tr>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.precio }} $</td>
+                <td>{{ producto.fechapublicacion }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">No hay productos disponibles.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
