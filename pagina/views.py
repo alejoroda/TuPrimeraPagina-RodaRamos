@@ -15,6 +15,8 @@ def register(response):
     else:
             form = RegisterForm()
     return render(response, 'register.html', {"form": form})
+def about(request):
+    return render(request, 'about.html')
 def posts(request):
     productos = Producto.objects.all()
     return render(request, 'posts.html', {'productos': productos})

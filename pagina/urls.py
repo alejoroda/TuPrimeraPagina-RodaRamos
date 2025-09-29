@@ -5,6 +5,7 @@ app_name = "pagina"
 urlpatterns = [
     path('', views.home, name="home"),
     path('register/', views.register, name="register"),
+    path('about/', views.about, name="about"),
     path('posts/', views.posts, name="posts"),
     path('posts/create/', views.post_create, name="post_create"),
     path('', include('django.contrib.auth.urls')),
