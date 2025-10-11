@@ -1,66 +1,144 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block extra_head %}{% endblock %}
+    <title>{% block title %}Compra y Venta - MiDjango{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-</head>
+    <style>
+        body {
+            background: #f7f7f7;
+            color: #111;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .navbar {
+            background: #111;
+            border-bottom: 3px solid #fff;
+        }
+        .navbar-brand {
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff !important;
+        }
+        .navbar-nav .nav-link, .dropdown-item {
+            color: #fff !important;
+            font-weight: 500;
+        }
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link:focus, .navbar-nav .nav-link:hover, .dropdown-item:hover {
+            color: #111 !important;
+            background: #fff !important;
+        }
+        .dropdown-menu {
+            background: #222;
+            border-radius: 0.5rem;
+        }
+        .btn-primary, .btn-success {
+            background: #111 !important;
+            border: none;
+            color: #fff !important;
+            font-weight: 700;
+        }
+        .btn-primary:hover, .btn-success:hover {
+            background: #fff !important;
+            color: #111 !important;
+        }
+        .btn-outline-secondary {
+            border-color: #111;
+            color: #111;
+        }
+        .btn-outline-secondary:hover {
+            background: #fff;
+            color: #111;
+            border-color: #fff;
+        }
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+        }
+        .card-header {
+            background: #fff;
+            color: #111;
+            font-weight: 700;
+            border-radius: 1rem 1rem 0 0;
+        }
+        .card-title {
+            font-weight: 700;
+        }
+        footer {
+            background: #111;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>{% block header %}{% endblock %}</h1>
-    </header>
-    <nav>
-        {% block nav %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Navegación</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'pagina:home' %}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'pagina:login' %}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'pagina:register' %}">Registrarse</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'pagina:posts' %}">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'pagina:about' %}">About</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        {% endblock %}
-    </nav>
-   <main>
-    {% if user.is_authenticated %}
-    <p>Bienvenido, {{ user.username }}!</p>
-<form method="post" action="{% url 'pagina:logout' %}" style="display: inline;">
-{% csrf_token %}
-<button type="submit" class="btn btn-outline-danger">Cerrar sesión</button>
-</form>
-<a href="{% url 'pagina:post_create' %}" class="btn btn-primary">Crear producto</a>
-    {% endif %}
     
-    {% block content %}{% endblock %}
-</main>
+    <div class="container-fluid p-0">
+        {% block banner %}
+        <img src="{% static 'img/bannerpage.jpg' %}" alt="Banner principal" class="w-100" style="max-height: 320px; object-fit: cover; object-position: center;">
+        {% endblock %}
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'pagina:home' %}">
+                {% if user.is_authenticated %}
+                    <img src="{% if user.perfil and user.perfil.imagen %}{{ user.perfil.imagen.url }}{% else %}{% static 'img/profilepage.webp' %}{% endif %}"
+                         alt="Perfil"
+                         class="rounded-circle border"
+                         width="32" height="32"
+                         style="object-fit:cover; background:#eee;">
+                    <span class="fw-semibold small">{{ user.username }}</span>
+                {% else %}
+                    <span class="fw-semibold small">No conectado</span>
+                {% endif %}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarDropdown">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Menú
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+                            <li><a class="dropdown-item" href="{% url 'pagina:home' %}">Inicio</a></li>
+                            <li><a class="dropdown-item" href="{% url 'pagina:pages' %}">Productos</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'pagina:perfil' %}">Perfil</a></li>
+                                <li><a class="dropdown-item" href="{% url 'pagina:post_create' %}">Publicar producto</a></li>
+                                <li>
+                                    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item text-start w-100" style="background:none; border:none; color:#111; font-weight:500;">
+                                            Cerrar sesión
+                                        </button>
+                                    </form>
+                                </li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="{% url 'pagina:login' %}">Iniciar sesión</a></li>
+                                <li><a class="dropdown-item" href="{% url 'pagina:register' %}">Registrarse</a></li>
+                            {% endif %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'pagina:about' %}">Acerca de</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
     <footer>
-        {% block footer %}Alejo Roda Ramos{% endblock %}
+        {% block footer %}Creado por Alejo Roda Ramos{% endblock %}
     </footer>
-    {% block extra_js %}{% endblock %}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

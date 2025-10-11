@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0" style="background:#fff; border-radius:1rem;">
+                <div class="card-header text-center" style="background:#fff; color:#111; font-weight:700; border-radius:1rem 1rem 0 0;">
+                    <h4 class="mb-0">Perfil de Usuario</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img src="{% if user.is_authenticated and user.perfil and user.perfil.imagen %}{{ user.perfil.imagen.url }}{% else %}{% static 'img/profilepage.webp' %}{% endif %}" class="rounded-circle border border-3" alt="Foto de perfil" width="120" height="120" style="object-fit:cover; background:#eee;">
+                    </div>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item bg-transparent"><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</li>
+                        <li class="list-group-item bg-transparent"><strong>Usuario:</strong> {{ user.username }}</li>
+                        <li class="list-group-item bg-transparent"><strong>Email:</strong> {{ user.email }}</li>
+                        <li class="list-group-item bg-transparent"><strong>Fecha de nacimiento:</strong>
+                            {% if user.perfil and user.perfil.fecha_nacimiento %}
+                                {{ user.perfil.fecha_nacimiento|date:"d/m/Y" }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <div class="mt-4 text-center">
+                        <a href="{% url 'pagina:editar_perfil' %}" class="btn btn-primary px-4">Editar Perfil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

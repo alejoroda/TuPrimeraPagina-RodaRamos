@@ -1,21 +1,28 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}About Us{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h2 class="card-title mb-4 text-center">About Us</h2>
-                    <p class="card-text">Welcome to our website! We are passionate about sharing knowledge and building great web experiences with Django and Bootstrap. Our goal is to help you learn, grow, and create amazing projects.</p>
-                    <ul class="list-group list-group-flush mb-3">
-                        <li class="list-group-item">Modern design with Bootstrap</li>
-                        <li class="list-group-item">Easy navigation</li>
-                        <li class="list-group-item">Responsive layout</li>
+            <div class="card shadow-lg border-0" style="border-radius:1rem;">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <img src="{% static 'img/logo.webp' %}" alt="Logo" width="80" height="80" class="mb-2" style="object-fit:contain;">
+                    </div>
+                    <h2 class="card-title mb-3 fw-bold" style="letter-spacing:1px;">Alejo Roda Ramos</h2>
+                    <p class="card-text fs-5 mb-4">
+                        Soy un novato en programación que ha comenzado su experiencia con Python en CODER.<br>
+                        Estudié comunicación en la Universidad de Córdoba y busco ampliar mis conocimientos y experiencias e involucrarme en el mundo de la programación.<br>
+                        <span class="d-block mt-3">Este es mi primer diseño, una suerte de página de compra y venta de productos de inmuebles usando Bootstrap, Django y Python.</span>
+                    </p>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item bg-transparent border-0 fs-6"><i class="bi bi-bootstrap-fill me-2"></i>Bootstrap</li>
+                        <li class="list-group-item bg-transparent border-0 fs-6"><i class="bi bi-file-earmark-code me-2"></i>Django & Python</li>
+                        <li class="list-group-item bg-transparent border-0 fs-6"><i class="bi bi-house-door me-2"></i>Compra y venta de inmuebles</li>
                     </ul>
-                    <p class="text-muted text-center">Thank you for visiting!</p>
+                    <p class="text-muted text-center mt-3">¡Gracias por visitar mi proyecto!</p>
                 </div>
             </div>
         </div>

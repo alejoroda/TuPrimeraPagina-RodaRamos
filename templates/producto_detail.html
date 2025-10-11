@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detalle del Producto{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow">
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% else %}
+                    <img src="{% static 'img/defaultpost.jpg' %}" class="card-img-top" alt="Sin imagen">
+                {% endif %}
+                <div class="card-body">
+                    <h2 class="card-title fw-bold">{{ producto.nombre }}</h2>
+                    <p class="card-text text-muted">Categoría: {{ producto.categoria }}</p>
+                    <p class="card-text">Precio: <span class="fw-bold">{{ producto.precio }} $</span></p>
+                    <p class="card-text">Publicado el: {{ producto.fechapublicacion }}</p>
+                    {% if producto.descripcion %}
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    {% endif %}
+                    {% if user == producto.autor or user.is_superuser %}
+                        <a href="{% url 'pagina:producto_editar' producto.id %}" class="btn btn-warning mb-2">Editar</a>
+                        <form method="post" action="{% url 'pagina:producto_eliminar' producto.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger mb-2" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">Eliminar</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h5 class="mt-4">Comentarios</h5>
+{% if user.is_authenticated %}
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="comentario" class="btn btn-primary">Comentar</button>
+    </form>
+{% else %}
+    <p>Debes <a href="{% url 'pagina:login' %}">iniciar sesión</a> para comentar.</p>
+{% endif %}
+
+{% for comentario in comentarios %}
+    <div class="mb-3 p-3 border rounded bg-white shadow-sm">
+        <div class="d-flex align-items-center mb-2">
+            {% with perfil=comentario.autor.perfil %}
+                {% if perfil and perfil.imagen %}
+                    <img src="{{ perfil.imagen.url }}" alt="Perfil" class="rounded-circle border" width="36" height="36" style="object-fit:cover; background:#eee;">
+                {% else %}
+                    <img src="{% static 'img/profilepage.webp' %}" alt="Perfil" class="rounded-circle border" width="36" height="36" style="object-fit:cover; background:#eee;">
+                {% endif %}
+            {% endwith %}
+            <div class="ms-2">
+                <strong class="small">{{ comentario.autor.username }}</strong>
+                <span class="text-muted small">{{ comentario.fecha|date:"d/m/Y H:i" }}</span>
+            </div>
+        </div>
+        <p class="mb-1">{{ comentario.texto }}</p>
+        {% for respuesta in comentario.respuestas.all %}
+            <div class="ms-5 mt-2 p-2 border-start border-3 border-dark bg-light rounded">
+                <div class="d-flex align-items-center mb-1">
+                    {% with perfil=respuesta.autor.perfil %}
+                        {% if perfil and perfil.imagen %}
+                            <img src="{{ perfil.imagen.url }}" alt="Perfil" class="rounded-circle border" width="28" height="28" style="object-fit:cover; background:#eee;">
+                        {% else %}
+                            <img src="{% static 'img/profilepage.webp' %}" alt="Perfil" class="rounded-circle border" width="28" height="28" style="object-fit:cover; background:#eee;">
+                        {% endif %}
+                    {% endwith %}
+                    <div class="ms-2">
+                        <strong class="small">{{ respuesta.autor.username }}</strong>
+                        <span class="text-muted small">{{ respuesta.fecha|date:"d/m/Y H:i" }}</span>
+                    </div>
+                </div>
+                <p class="mb-0">{{ respuesta.texto }}</p>
+            </div>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <form method="post" class="mt-2 ms-5">
+                {% csrf_token %}
+                <input type="hidden" name="comentario_id" value="{{ comentario.id }}">
+                <div class="input-group input-group-sm">
+                    <input type="text" name="respuesta" class="form-control" placeholder="Responder a este comentario...">
+                    <button type="submit" name="respuesta_btn" class="btn btn-outline-dark">Responder</button>
+                </div>
+            </form>
+        {% endif %}
+        {% if user == comentario.autor or user.is_superuser %}
+            <form method="post" action="{% url 'pagina:eliminar_comentario' comentario.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger ms-2" onclick="return confirm('¿Eliminar este comentario?');">
+                    <i class="bi bi-trash"></i> Eliminar
+                </button>
+            </form>
+        {% endif %}
+    </div>
+{% empty %}
+    <p class="text-muted">Aún no hay comentarios.</p>
+{% endfor %}
+{% endblock %}
