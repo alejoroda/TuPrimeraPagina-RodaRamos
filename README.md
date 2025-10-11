@@ -77,7 +77,7 @@ MiProyectoDjango/
 │   ├── base.html
 │   ├── home.html
 │   ├── post_create.html
-│   ├── posts.html
+│   ├── pages.html
 │   ├── producto_detail.html
 │   ├── perfil.html
 │   ├── about.html
