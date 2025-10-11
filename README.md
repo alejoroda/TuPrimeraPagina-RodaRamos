@@ -1,6 +1,8 @@
 # TuPrimeraPagina-RodaRamos
 # MiProyectoDjango
 
+Video de demostración: https://drive.google.com/file/d/1Ikg-gy2oQ89Dc8000UhyisoTtZM4MqdV/view?usp=sharing
+
 Aplicación web desarrollada con **Django** que permite gestionar productos y registrar usuarios.  
 Incluye autenticación de usuarios, formularios modernos con Bootstrap, comentarios y respuestas, imágenes por defecto y administración de productos.
 
